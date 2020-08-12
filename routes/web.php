@@ -10,13 +10,41 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+/*
+Route::get('/', [
+    'uses' => 'HomeController@index',
+    'as' = 'Home'
+    ]);
+*/
+Route::get('/', 'HomeController@index')->name('Home');
 
-Route::get('/', function () {
-    return view('index');
+
+Route::group([
+    'prefix' => 'admin',
+    'namespace' => 'Admin',
+    'as' => 'admin.'
+], function () {
+    Route::get('/', 'IndexController@index')->name('index');
+    Route::get('/test1', 'IndexController@test1')->name('test1');
+    Route::get('/test2', 'IndexController@test2')->name('test2');
 });
-Route::get('/news', function () {
-    return view('news');
+
+Route::group([
+    'prefix' => 'news',
+    'as' => 'news.'
+], function () {
+    Route::get('/', 'NewsController@index')->name('index');
+    Route::get('/one/{id}', 'NewsController@show')->name('show');
+
+    Route::group([
+        'as' => 'category.'
+    ], function () {
+        Route::get('/categories', 'CategoryController@index')->name('index');
+        Route::get('/category/{name}', 'CategoryController@show')->name('show');
+    });
 });
-Route::get('/about', function () {
-    return view('about');
-});
+
+Route::view('/vue', 'vue')->name('vue');
+
+Auth::routes();
+
