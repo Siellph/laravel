@@ -46,5 +46,7 @@ Route::group([
 
 Route::view('/vue', 'vue')->name('vue');
 
+Route::view('/auth/login', 'auth.login')->name('auth');
+
 Auth::routes();
 

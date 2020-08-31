@@ -1,22 +1,13 @@
-@extends('layouts.main')
-
-@section('title')
-    @parent Категории новостей
-@endsection
-
-@section ('menu')
-    @include('menu')
-@endsection
+@extends('layouts.app')
 
 @section('content')
     @forelse($categories as $category)
-
-        <a class="text-decoration-none" href="{{ route('news.category.show', $category['slug']) }}">
+<div class="list-group">
+        <a class="text-decoration-none list-group-item-action" href="{{ route('news.category.show', $category['slug']) }}">
             {{ $category['title'] }}
         </a>
-
+</div>
     @empty
         Нет категорий
     @endforelse
 @endsection
-
